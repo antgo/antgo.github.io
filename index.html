@@ -1,8 +1,67 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Redirecting...</title>
-    <meta http-equiv="refresh" content="0;URL=http://github.com/antgo"/>
+    <title>Anthony Ngo</title>
+    <meta name="viewport" content="width=device-width; initial-scale=1"/>
+  <script type="text/javascript">
+    (function() {
+  var windowwidth = window.outerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  document.getElementById("ghb").style.fontSize = windowwidth * 0.15 + "px";
+  document.getElementById("header").style.width = windowwidth / 2 + "px";
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4) {
+      var ghb = JSON.parse(xhr.responseText);
+      var fmghb = {
+        data: ghb
+      };
+      for (var i = 0; i < fmghb.data.length; i++) {   
+        document.getElementById("repos").innerHTML += "<hr/><span class='project'><div><a class='project-url' href=/" + fmghb.data[i].name + "/" + ">" + fmghb.data[i].name + "</a></div><p class='project-desc'>" + fmghb.data[i].description + "</p></span>";
+      } 
+      document.getElementById("xhrstate").style.display = "none";
+    }
+  };
+  xhr.open("GET", "https://api.github.com/users/antgo/repos?sort=updated&access_token=ff523376c897a52182c3ed4de1e9d8cf6d34c397", true);
+  xhr.send();
+})();
+  </script>
+  <style type="text/css">
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+    #header {
+      margin: auto;
+    }
+    #repos {
+      width: 75%;
+      margin: auto;
+    }
+    #ghb {
+      text-decoration: none;
+      font-family: "Courier New";
+      color: black;
+    }
+
+#xhrstate {
+  text-align: center;
+}
+.project {
+  text-align: center;
+}
+.project-url {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: "Lucida Console";
+  font-size: 200%;
+}
+  </style>
   </head>
-  <body></body>
+  <body>
+    <div id="header">
+  <a href="https://github.com/antgo" id="ghb">antgo</a>
+</div>
+<p id="xhrstate">Loading...</p>
+<div id="repos"></div></body>
 </html>
